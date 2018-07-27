@@ -1,13 +1,14 @@
-/*             Æ½ÃæÓĞÏŞÔª·¨¼ÆËã³ÌĞò            */
-/*  nn:½Úµã×ÜÊı£»ne:µ¥Ôª×ÜÊı£»nd:×Ü×ÔÓÉ¶ÈÊı£»E:µ¯ĞÔÄ£Á¿£»
-    nfix:½ÚµãÎ»ÒÆÔ¼ÊøµÄ×Ü×ÔÓÉ¶ÈÊı£»anu:²´ËÉ±È;
-    T:½á¹¹µÄºñ¶È£»gm:½á¹¹²ÄÁÏµÄÖØ¶È;
-    NTYPE:NTYPE=1±íÊ¾Æ½ÃæÓ¦Á¦£¬ÆäËûÎªÆ½ÃæÓ¦±ä¡£
-    loc(I,1),loc(I,2),loc(I,3)£ºµÚI¸öµ¥ÔªÄæÊ±ÕëÅÅÁĞµÄ½ÚµãºÅ
-    cx(J),cy(J)£ºµÚJ¸ö½ÚµãµÄ×ø±ê
-    ifix(K)£ºµÚK¸ö¸ø¶¨Ô¼ÊøµÄ×ÔÓÉ¶ÈºÅ
-    f(I)£ºµÚI¸ö×ÔÓÉ¶ÈÉÏµÄÔ¼ÊøÁ¦
-    stres(I,J)£º¸÷µ¥ÔªµÄÓ¦Á¦
+# -*- coding:UTF-8 -*-
+/*             å¹³é¢æœ‰é™å…ƒæ³•è®¡ç®—ç¨‹åº            */
+/*  nn:èŠ‚ç‚¹æ€»æ•°ï¼›ne:å•å…ƒæ€»æ•°ï¼›nd:æ€»è‡ªç”±åº¦æ•°ï¼›E:å¼¹æ€§æ¨¡é‡ï¼›
+    nfix:èŠ‚ç‚¹ä½ç§»çº¦æŸçš„æ€»è‡ªç”±åº¦æ•°ï¼›anu:æ³Šæ¾æ¯”;
+    T:ç»“æ„çš„åšåº¦ï¼›gm:ç»“æ„ææ–™çš„é‡åº¦;
+    NTYPE:NTYPE=1è¡¨ç¤ºå¹³é¢åº”åŠ›ï¼Œå…¶ä»–ä¸ºå¹³é¢åº”å˜ã€‚
+    loc(I,1),loc(I,2),loc(I,3)ï¼šç¬¬Iä¸ªå•å…ƒé€†æ—¶é’ˆæ’åˆ—çš„èŠ‚ç‚¹å·
+    cx(J),cy(J)ï¼šç¬¬Jä¸ªèŠ‚ç‚¹çš„åæ ‡
+    ifix(K)ï¼šç¬¬Kä¸ªç»™å®šçº¦æŸçš„è‡ªç”±åº¦å·
+    f(I)ï¼šç¬¬Iä¸ªè‡ªç”±åº¦ä¸Šçš„çº¦æŸåŠ›
+    stres(I,J)ï¼šå„å•å…ƒçš„åº”åŠ›
 */              
 
 #include<stdio.h>
@@ -18,7 +19,7 @@
 #define  ND  12
 #define  IFIX  6
 
-/*   ¸ßË¹ÏûÈ¥·¨½âÏßĞÔ·½³Ì×é   */  
+/*   é«˜æ–¯æ¶ˆå»æ³•è§£çº¿æ€§æ–¹ç¨‹ç»„   */  
 float GAUSS(float gk[ND][ND],float f[ND]){
 	
 	    int i,i1,j,m;
@@ -45,30 +46,30 @@ float GAUSS(float gk[ND][ND],float f[ND]){
 	    
 }
 
-/*   ¼ÆËã¸Õ¶È¾ØÕó£¬½ÚµãÎ»ÒÆºÍµ¥ÔªÓ¦Á¦   */
+/*   è®¡ç®—åˆšåº¦çŸ©é˜µï¼ŒèŠ‚ç‚¹ä½ç§»å’Œå•å…ƒåº”åŠ›   */
 float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],float gk[ND][ND],float stres[NE][3],float bak[NE][3][6],int nn,int ne,int nd,int nfix,int NTYPE,float E,float anu,float t,float gm,char resultfile[10]){
 	
 	    FILE *result;
 	    char *str;
          int m,n,l,unit,i1,i2,i3; 	
          float s,s2,b1;
-	    //d[][] µ¯ĞÔ¾ØÕó£»bb[][] µ¥ÔªÓ¦±ä¾ØÕó£»ba[3][6] µ¥ÔªÓ¦Á¦¾ØÕó£»ek[][]µ¥Ôª¸Õ¶È¾ØÕó£»xx[]µ¥Ôª½ÚµãÎ»ÒÆ  £»be[] b(i,j,m)£»ce[] c(i,j,m)£»
+	    //d[][] å¼¹æ€§çŸ©é˜µï¼›bb[][] å•å…ƒåº”å˜çŸ©é˜µï¼›ba[3][6] å•å…ƒåº”åŠ›çŸ©é˜µï¼›ek[][]å•å…ƒåˆšåº¦çŸ©é˜µï¼›xx[]å•å…ƒèŠ‚ç‚¹ä½ç§»  ï¼›be[] b(i,j,m)ï¼›ce[] c(i,j,m)ï¼›
 	    float d[3][3],bb[3][6],ba[3][6],ek[6][6],be[3],ce[3],xx[6];
 	    
-	    //ÏÖ½«ÕûÌå¸Õ¶È¾ØÕóÖÃ0
+	    //ç°å°†æ•´ä½“åˆšåº¦çŸ©é˜µç½®0
 	    for(m=0;m<ND;m++){
 	    	    for(n=0;n<ND;n++){
 	    	    	    gk[m][n]=0.0;
 	    	    }
 	    }
 	    
-	    //¼ÆËãµ¯ĞÔ¾ØÕód[],NTYPE=1ÎªÆ½ÃæÓ¦Á¦£¬·ñÔòÎªÆ½ÃæÓ¦±ä
+	    //è®¡ç®—å¼¹æ€§çŸ©é˜µd[],NTYPE=1ä¸ºå¹³é¢åº”åŠ›ï¼Œå¦åˆ™ä¸ºå¹³é¢åº”å˜
 	    for(m=0;m<3;m++){
 	    	    for(n=0;n<3;n++){
 	    	    	    d[m][n]=0.0;
 	    	    }
 	    }
-	    if(NTYPE!=1){               //Æ½ÃæÓ¦±äÎÊÌâ
+	    if(NTYPE!=1){               //å¹³é¢åº”å˜é—®é¢˜
 	    	  E=E/(1.0-anu*anu);
 	    	  anu=anu/(1.0-anu);
 	    }
@@ -79,22 +80,22 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
 	    d[1][0]=d[0][1];
 	    d[2][2]=0.5*s*(1.0-anu);
 
-         //¼ÆËãÕûÌå¸Õ¶È¾ØÕó  
+         //è®¡ç®—æ•´ä½“åˆšåº¦çŸ©é˜µ  
          for(unit=0;unit<NE;unit++){
           	 
-          	//Ê×ÏÈÖÃbb[]Îª0
+          	//é¦–å…ˆç½®bb[]ä¸º0
               for(m=0;m<3;m++){
 	    	         for(n=0;n<6;n++){
 	    	    	         bb[m][n]=0.0;
 	    	         }
 	         }
 	          
-	         // µ¥Ôªi,j,m
+	         // å•å…ƒi,j,m
 	         i1=loc[unit][0]-1;
 	         i2=loc[unit][1]-1;
 	         i3=loc[unit][2]-1;	          
 	          
-	         // ¼ÆËã b(i,j,m£© c(i,j,m)
+	         // è®¡ç®— b(i,j,mï¼‰ c(i,j,m)
 	         be[0]=cy[i2]-cy[i3];
 	         be[1]=cy[i3]-cy[i1];
 	         be[2]=cy[i1]-cy[i2];
@@ -102,10 +103,10 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           	ce[1]=cx[i1]-cx[i3];
               ce[2]=cx[i2]-cx[i1];
           	 
-          	// 2±¶µ¥ÔªÃæ»ı
+          	// 2å€å•å…ƒé¢ç§¯
           	s2=cx[i1]*be[0]+cx[i2]*be[1]+cx[i3]*be[2];
           	 
-          	// ¼ÆËãµ¥ÔªÓ¦±ä¾ØÕóbb[][]
+          	// è®¡ç®—å•å…ƒåº”å˜çŸ©é˜µbb[][]
           	for(m=0;m<3;m++){
                	n=m*2+1;
           	 	l=n-1;
@@ -115,7 +116,7 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           	 	bb[2][n]=bb[0][l];
           	}
           	  
-          	// ¼ÆËã[ba]=[d][bb],²¢±£´æÔÚbak[][][]ÖĞ
+          	// è®¡ç®—[ba]=[d][bb],å¹¶ä¿å­˜åœ¨bak[][][]ä¸­
           	for(m=0;m<3;m++){
           		for(n=0;n<6;n++){
           			ba[m][n]=0;
@@ -126,7 +127,7 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           		}
           	} 
           	
-          	//¼ÆËãÖØÁ¦ÒıÆğµÄ½ÚµãÁ¦²¢µş¼Óµ½f[]
+          	//è®¡ç®—é‡åŠ›å¼•èµ·çš„èŠ‚ç‚¹åŠ›å¹¶å åŠ åˆ°f[]
           	if(gm!=0){
           		for(m=0;m<3;m++){
           			n=loc[unit][m];
@@ -135,7 +136,7 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           		}
           	}
           	
-          	// ¼ÆËãµ¥Ôª¸Õ¶È¾ØÕóek[][]
+          	// è®¡ç®—å•å…ƒåˆšåº¦çŸ©é˜µek[][]
           	for(m=0;m<6;m++){
           		for(n=0;n<6;n++){
           			b1=0;
@@ -146,7 +147,7 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           		}
           	}        	
           	
-          	// ×é×°ÕûÌå¸Õ¶È¾ØÕó
+          	// ç»„è£…æ•´ä½“åˆšåº¦çŸ©é˜µ
           	int inode,nodei,idofn,nrows,nrowe,jnode,jdofn,nodej,ncols,ncole;
           	for(inode=0;inode<3;inode++){
           		nodei=loc[unit][inode];
@@ -166,18 +167,18 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
           	 
           }
 	    
-	    //Êä³öÕûÌåÔØºÉÁĞÕóºÍÕûÌå¸Õ¶È¾ØÕó
+	    //è¾“å‡ºæ•´ä½“è½½è·åˆ—é˜µå’Œæ•´ä½“åˆšåº¦çŸ©é˜µ
 	    if((result=fopen(resultfile,"a"))==NULL){
 	  	   printf("cannot open %s\n",resultfile);
 	  	   exit(0);
 	    }
-	    // Êä³öÕûÌåÔØºÉÁĞÕó
-	    str="  ÕûÌåÔØºÉÁĞÕó\n";
+	    // è¾“å‡ºæ•´ä½“è½½è·åˆ—é˜µ
+	    str="  æ•´ä½“è½½è·åˆ—é˜µ\n";
 	    fputs(str,result);
-	    str="  NODE                 X¡ªLOAD                         Y¡ªLOAD\n";
+	    str="  NODE                 Xâ€”LOAD                         Yâ€”LOAD\n";
 	    fputs(str,result);
 	    n=0;
-	    for(m=0;m<NN;m++){	  	                  //Ğ´ÈëÕûÌåÔØºÉÁĞÕó
+	    for(m=0;m<NN;m++){	  	                  //å†™å…¥æ•´ä½“è½½è·åˆ—é˜µ
 	  	    n=m+1; 
 	         fprintf(result,"      %d",n);
 	         fprintf(result,"                 %9.6E",f[m*2]);
@@ -185,8 +186,8 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
 	    }
 	    str="\n";
 	    fputs(str,result);
-	    // Êä³öÕûÌå¸Õ¶È¾ØÕó
-	    str="  ÕûÌå¸Õ¶È¾ØÕó\n";
+	    // è¾“å‡ºæ•´ä½“åˆšåº¦çŸ©é˜µ
+	    str="  æ•´ä½“åˆšåº¦çŸ©é˜µ\n";
 	    fputs(str,result);
 	    for(m=0;m<ND;m++){
 	    	    for(n=0;n<ND;n++){
@@ -199,23 +200,23 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
 	    fputs(str,result);
 	    fclose(result);
 	    
-	    // ½«Ô¼Êø¶ÔÓ¦gk[][]µÄÖ÷¶Ô½ÇÏßÔªËØ³Ë´óÊı
+	    // å°†çº¦æŸå¯¹åº”gk[][]çš„ä¸»å¯¹è§’çº¿å…ƒç´ ä¹˜å¤§æ•°
 	    for(m=0;m<nfix;m++){
 	    	    n=ifix[m]-1;
 	    	    gk[n][n]=gk[n][n]*1.0e15;
 	    }
 	    
-	    // µ÷ÓÃ½â·½³Ì×é³ÌĞò
+	    // è°ƒç”¨è§£æ–¹ç¨‹ç»„ç¨‹åº
 	    GAUSS(gk,f);
 	    
-	    // ½«µ¥ÔªÓ¦Á¦¾ØÕóÖÃ0
+	    // å°†å•å…ƒåº”åŠ›çŸ©é˜µç½®0
 	    for(m=0;m<NE;m++){
 	    	    for(n=0;n<3;n++){
 	    	    	    stres[m][n]=0;
 	    	    }
 	    }	    
 	    
-	    //ÒıÈëµ¥Ôª½ÚµãÎ»ÒÆ
+	    //å¼•å…¥å•å…ƒèŠ‚ç‚¹ä½ç§»
 	    for(m=0;m<NE;m++){
 	    	    for(n=0;n<3;n++){
 	    	    	    xx[0]=f[2*loc[m][0]-2];
@@ -224,7 +225,7 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
 	    	    	    xx[3]=f[2*loc[m][1]-1];
 	    	    	    xx[4]=f[2*loc[m][2]-2];
 	    	    	    xx[5]=f[2*loc[m][2]-1];
-	    	    	    // ¼ÆËãµ¥ÔªÓ¦Á¦
+	    	    	    // è®¡ç®—å•å…ƒåº”åŠ›
 	    	    	    for(l=0;l<6;l++){
 	    	    	    	    stres[m][n]=stres[m][n]+bak[m][n][l]*xx[l];
 	    	    	    }
@@ -233,45 +234,45 @@ float CST(int loc[NE][3],float cx[NN],float cy[NN],int ifix[IFIX],float f[ND],fl
 	    
 }
 
-/*   Ö÷³ÌĞò   */
+/*   ä¸»ç¨‹åº   */
 void main(){
 	  
 	  printf("\n");
 	  printf("\n");
-	  printf("****************±¾³ÌĞòÓÃÓÚÈı½ÇĞÎµ¥ÔªµÄÓĞÏŞÔª¼ÆËã******************");
+	  printf("****************æœ¬ç¨‹åºç”¨äºä¸‰è§’å½¢å•å…ƒçš„æœ‰é™å…ƒè®¡ç®—******************");
 	  printf("\n");
 	  printf("\n");
-	  printf("************************±àĞ´Õß:       ****************************");
+	  printf("************************ç¼–å†™è€…:       ****************************");
 	  printf("\n");
 	  printf("\n");
 	
-	  //¶¨ÒåÊı×é¼°±äÁ¿
+	  //å®šä¹‰æ•°ç»„åŠå˜é‡
 	  int nn,ne,nd,nfix,NTYPE;
 	  float E,anu,t,gm;
 	  int loc[NE][3],ifix[IFIX];
 	  float cx[NN],cy[NN],f[ND],gk[ND][ND],stres[NE][3],bak[NE][3][6];
 	  int i,j,k;
 	  
-	  FILE *data,*result;                         //¶¨ÒåÎÄ¼şÖ¸Õë
+	  FILE *data,*result;                         //å®šä¹‰æ–‡ä»¶æŒ‡é’ˆ
 	  char datafile[10],resultfile[10];
-	  printf("ÇëÊäÈëÊı¾İÎÄ¼şµÄÎÄ¼şÃû:\n");
+	  printf("è¯·è¾“å…¥æ•°æ®æ–‡ä»¶çš„æ–‡ä»¶å:\n");
 	  printf("\n");
 	  scanf("%s",datafile);
 	  printf("\n");
 	  printf("\n");
-	  printf("ÇëÊäÈë½á¹ûÎÄ¼şµÄÎÄ¼şÃû:\n");
+	  printf("è¯·è¾“å…¥ç»“æœæ–‡ä»¶çš„æ–‡ä»¶å:\n");
 	  printf("\n");
 	  scanf("%s",resultfile);
 	  printf("\n");
 	  printf("\n");
 	  
-	  //´ÓÊı¾İÎÄ¼şÖĞ¶ÁÈë»ù±¾²ÎÊı¡¢µ¥Ôª±àºÅ¡¢½Úµã×ø±ê¡¢Ô¼Êø×ÔÓÉ¶È¼°½ÚµãÔØºÉ
+	  //ä»æ•°æ®æ–‡ä»¶ä¸­è¯»å…¥åŸºæœ¬å‚æ•°ã€å•å…ƒç¼–å·ã€èŠ‚ç‚¹åæ ‡ã€çº¦æŸè‡ªç”±åº¦åŠèŠ‚ç‚¹è½½è·
 	  if((data=fopen(datafile,"r"))==NULL){
 	  	   printf("cannot open %s\n",datafile);
 	  	   exit(0);
 	  }
        while(!feof(data)){   	   	  
-	           fscanf(data,"%d",&nn);          //¶ÁÈë»ù±¾²ÎÊı
+	           fscanf(data,"%d",&nn);          //è¯»å…¥åŸºæœ¬å‚æ•°
 	           fscanf(data,"%d",&ne);
 	           fscanf(data,"%d",&nd);
 	           fscanf(data,"%d",&nfix);
@@ -282,34 +283,34 @@ void main(){
 	           fscanf(data,"%d",&NTYPE);                           
                 for(i=0;i<NE;i++){                              
 	           	  for(j=0;j<3;j++){ 
-	           	  	  fscanf(data,"%d",&loc[i][j]);                  //¶ÁÈëµ¥Ôª½Úµã±àºÅ
+	           	  	  fscanf(data,"%d",&loc[i][j]);                  //è¯»å…¥å•å…ƒèŠ‚ç‚¹ç¼–å·
 	           	  }
 	           }          
 		      for(i=0;i<NN;i++){
-	           	  fscanf(data,"%f",&cx[i]);                           //¶ÁÈë½Úµã×ø±ê
+	           	  fscanf(data,"%f",&cx[i]);                           //è¯»å…¥èŠ‚ç‚¹åæ ‡
 	           	  fscanf(data,"%f",&cy[i]);
 	           }    
-	           for(j=0;j<IFIX;j++){                                       //¶ÁÈëÔ¼Êø×ÔÓÉ¶È
+	           for(j=0;j<IFIX;j++){                                       //è¯»å…¥çº¦æŸè‡ªç”±åº¦
 	          	 fscanf(data,"%d",&ifix[j]);  
 	           }  
-	           for(k=0;k<ND;k++){                                       //¶ÁÈë½ÚµãÔØºÉ
+	           for(k=0;k<ND;k++){                                       //è¯»å…¥èŠ‚ç‚¹è½½è·
 	           	 fscanf(data,"%f",&f[k]);
 	          }
        }	  
 	  fclose(data);
 	  
-	  //½«»ù±¾Êı¾İĞ´Èëµ½Êä³öÎÄ¼şÖĞ
+	  //å°†åŸºæœ¬æ•°æ®å†™å…¥åˆ°è¾“å‡ºæ–‡ä»¶ä¸­
 	  if((result=fopen(resultfile,"a"))==NULL){
 	  	   printf("cannot open %s\n",resultfile);
 	  	   exit(0);
 	  }
 	  char  *str;
-	  str="  »ù±¾²ÎÊı\n";        //Ğ´Èë»ù±¾²ÎÊı
+	  str="  åŸºæœ¬å‚æ•°\n";        //å†™å…¥åŸºæœ¬å‚æ•°
 	  fputs(str,result);
 	  str="  NN   NE     ND       NFIX            E                   ANU                     T                      GM             NTYPE\n";
 	  fputs(str,result);
 	  fprintf(result,"  %3d    %3d       %3d         %3d         %f         %f          %f          %f              %d\n\n",nn,ne,nd,nfix,E,anu,t,gm,NTYPE);
-	  str="  µ¥Ôª½Úµã±àºÅ\n";                  //Ğ´Èëµ¥Ôª½Úµã±àºÅ  
+	  str="  å•å…ƒèŠ‚ç‚¹ç¼–å·\n";                  //å†™å…¥å•å…ƒèŠ‚ç‚¹ç¼–å·  
 	  fputs(str,result);
 	  str="  UNIT         I             J            M\n";
 	  fputs(str,result);
@@ -325,7 +326,7 @@ void main(){
 	  }
 	  str="\n";
 	  fputs(str,result);
-	  str="  ½Úµã×ø±ê\n";                         //Ğ´Èë½Úµã×ø±ê
+	  str="  èŠ‚ç‚¹åæ ‡\n";                         //å†™å…¥èŠ‚ç‚¹åæ ‡
 	  fputs(str,result);
 	  str="  NODE                 X                        Y\n";
 	  fputs(str,result); 
@@ -337,7 +338,7 @@ void main(){
 	  }
 	  str="\n";
 	  fputs(str,result);    	   	 
-	  str="  Ô¼Êø×ÔÓÉ¶È\n";                      //Ğ´ÈëÔ¼Êø×ÔÓÉ¶È
+	  str="  çº¦æŸè‡ªç”±åº¦\n";                      //å†™å…¥çº¦æŸè‡ªç”±åº¦
 	  fputs(str,result); 
 	  for(j=0;j<IFIX;j++){
 	       fprintf(result,"  %d      ",ifix[j]);
@@ -348,18 +349,18 @@ void main(){
 	  fputs(str,result);	  
 	  fclose(result);
 	  
-	  //µ÷CST×Ó³ÌĞò£¬¼ÆËã¸Õ¶È¾ØÕó¡¢½ÚµãÎ»ÒÆºÍµ¥ÔªÓ¦Á¦
+	  //è°ƒCSTå­ç¨‹åºï¼Œè®¡ç®—åˆšåº¦çŸ©é˜µã€èŠ‚ç‚¹ä½ç§»å’Œå•å…ƒåº”åŠ›
 	  CST(loc,cx,cy,ifix,f,gk,stres,bak,nn,ne,nd,nfix,NTYPE,E,anu,t,gm,resultfile);
 	  
-	  //½«¼ÆËã½á¹ûĞ´Èëµ½Êä³öÎÄ¼şÖĞ
+	  //å°†è®¡ç®—ç»“æœå†™å…¥åˆ°è¾“å‡ºæ–‡ä»¶ä¸­
 	  if((result=fopen(resultfile,"a"))==NULL){
 	  	   printf("cannot open %s\n",resultfile);
 	  	   exit(0);
 	  }
-	  //Ğ´Èë½ÚµãÎ»ÒÆ
-	  str="  ½ÚµãÎ»ÒÆ\n";
+	  //å†™å…¥èŠ‚ç‚¹ä½ç§»
+	  str="  èŠ‚ç‚¹ä½ç§»\n";
 	  fputs(str,result);
-	  str="  NODE                  X¡ªDISP                            Y¡ªDISP\n";
+	  str="  NODE                  Xâ€”DISP                            Yâ€”DISP\n";
 	  fputs(str,result);
 	  j=0;
 	  for(i=0;i<NN;i++){	  	                 
@@ -371,10 +372,10 @@ void main(){
 	    str="\n";
 	    fputs(str,result);                         
 	  
-	  //Ğ´Èëµ¥ÔªÓ¦Á¦
-	  str="  µ¥ÔªÓ¦Á¦\n";
+	  //å†™å…¥å•å…ƒåº”åŠ›
+	  str="  å•å…ƒåº”åŠ›\n";
 	  fputs(str,result);
-	  str="  ELEMENT              X¡ªSTR                              Y¡ªSTR                            XY¡ªSTR\n";
+	  str="  ELEMENT              Xâ€”STR                              Yâ€”STR                            XYâ€”STR\n";
 	  fputs(str,result);
 	  for(i=0;i<NE;i++){
 	  	  k=i+1;
@@ -387,8 +388,8 @@ void main(){
 	  }
 	  fclose(result);  
 	
-	  //³ÌĞò½áÊø
-	  printf("°´ÈÎÒâ¼ü½áÊø³ÌĞò!");                     	 
+	  //ç¨‹åºç»“æŸ
+	  printf("æŒ‰ä»»æ„é”®ç»“æŸç¨‹åº!");                     	 
 	  getchar(); 
 	  getchar();  
 }
